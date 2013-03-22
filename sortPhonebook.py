@@ -1,4 +1,5 @@
 import sys
+import tempfile
 
 def chunkUnsorted(phonebook_size, number_of_chunks):
 # Break the single unsorted.txt phonebook into number_of_chunk sorted files within temp/
@@ -21,12 +22,9 @@ def chunkUnsorted(phonebook_size, number_of_chunks):
                 x += 1
         list.sort()
         if list:
-            filename = "temp/chunk%d.txt" % current_temp_file
-            current_temp_file += 1
-            output_file = open(filename, 'w')
             for x in list:
-                output_file.write(str(x) + '\n')
-            output_file.close()
+                fid[current_temp_file].write(str(x) + '\n')
+            current_temp_file += 1
 
     unsorted_file.close()
 
@@ -35,7 +33,9 @@ def sortPhonebook(phonebook_size, number_of_chunks):
 # Iterate over phonebook_size adding the min value to the output and swapping the appropriate entry in lowestValues
 # Takes roughly 80% of the processing time of this program
 
-    fid = [open('temp/chunk%d.txt' % count, 'r') for count in range(0, number_of_chunks)]
+    for x in xrange(0, number_of_chunks):
+        fid[x].seek(0)
+
     lowestValues = [int(fid[count].readline()) for count in range(0, number_of_chunks)]
 
     output_file = open('phonebook.txt', 'w')
@@ -52,6 +52,8 @@ def sortPhonebook(phonebook_size, number_of_chunks):
 
     output_file.close()
 
-chunkUnsorted((2000000*10), 200)
-sortPhonebook((2000000*10), 200)
+fid = [tempfile.TemporaryFile() for count in range(0, 10)]
+
+chunkUnsorted((2000000*10), 10)
+sortPhonebook((2000000*10), 10)
 
