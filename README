@@ -1,0 +1,94 @@
+For 22MB file:
+[01:25:56]:~/GitHub/Phonebook -> time python generatePhonebook.py 
+
+real	0m5.617s
+user	0m5.503s
+sys	0m0.080s
+
+[01:27:37]:~/GitHub/Phonebook -> time python sortPhonebook.py
+
+real	0m26.427s
+user	0m26.238s
+sys	0m0.165s
+
+[01:28:05]:~/GitHub/Phonebook -> time python testPhonebook.py 
+Test completed.
+
+real	0m3.008s
+user	0m2.992s
+sys	0m0.016s
+
+Ratio of sort to generate:  4.70 
+
+for 220MB file:
+[01:28:22]:~/GitHub/Phonebook -> time python generatePhonebook.py 
+
+real	0m57.885s
+user	0m55.849s
+sys	0m0.716s
+
+[01:31:52]:~/GitHub/Phonebook -> time python sortPhonebook.py
+
+real	4m14.057s
+user	4m11.954s
+sys	0m1.504s
+
+[01:36:17]:~/GitHub/Phonebook -> time python testPhonebook.py 
+Test completed.
+
+real	0m26.515s
+user	0m26.346s
+sys	0m0.115s
+
+Ratio of sort to generate: 4.38
+
+for 22GB file
+[01:38:59]:~/GitHub/Phonebook -> time python generatePhonebook.py 
+say "Hello" * 10
+
+real	89m14.988s
+user	88m20.409s
+sys	0m45.042s
+
+
+For 22 MB Phonebook (tweaked programs):
+[03:36:46]:~/GitHub/Phonebook -> time python generatePhonebook.py 
+
+real	0m5.171s
+user	0m5.098s
+sys	0m0.047s
+
+[04:04:54]:~/GitHub/Phonebook -> time python sortPhonebook.py 
+
+real	0m23.332s
+user	0m23.158s
+sys	0m0.152s
+
+[03:41:59]:~/GitHub/Phonebook -> time python testPhonebook.py
+
+real	0m2.299s
+user	0m2.282s
+sys	0m0.016s
+
+Ratio of sort to generate: 4.51
+
+For 220 MB Phonebook (tweaked programs):
+[04:05:22]:~/GitHub/Phonebook -> time python generatePhonebook.py 
+
+real	0m50.132s
+user	0m49.616s
+sys	0m0.452s
+
+[04:17:58]:~/GitHub/Phonebook -> time python sortPhonebook.py 
+
+real	3m58.832s
+user	3m57.156s
+sys	0m1.466s
+
+[04:12:13]:~/GitHub/Phonebook -> time python testPhonebook.py 
+
+real	0m23.107s
+user	0m23.021s
+sys	0m0.086s
+
+Ratio of sort to generate: 4.76

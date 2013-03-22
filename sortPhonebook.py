@@ -1,62 +1,57 @@
 import sys
-import random
 
-book_file = open('book.txt', 'r+')
+def chunkUnsorted(phonebook_size, number_of_chunks):
+# Break the single unsorted.txt phonebook into number_of_chunk sorted files within temp/
+# Takes roughly 20% of the processing time of this program
 
-number_of_chunks = 200 # I assume that number_of_chunks must evenly divide the total file
-phonebook_size = (2000000*1)
-chunk_size = phonebook_size/number_of_chunks
-current_line = ' '
-current_temp_file = 0
+    unsorted_file = open('unsorted.txt', 'r')
 
-while (current_line):
-    list = []
-    x = 0
-    while (current_line and (x < chunk_size)):
-        current_line = book_file.readline()
-        if (current_line):
-            list.append(int(current_line))
-        x += 1
-    list.sort()
-    if list:
-        filename = "temp/chunk%d.txt" % current_temp_file
-        current_temp_file += 1
-        output_file = open(filename, 'w')
-        for x in list:
-            output_file.write(str(x) + '\n')
-        output_file.close()
-    else:
-        current_temp_file -= 1
+    chunk_size = phonebook_size/number_of_chunks
 
-book_file.close()
+    current_line = ' '
+    current_temp_file = 0
 
-fid = [open('temp/chunk%d.txt' % count, 'r') for count in range(0, number_of_chunks)]
-lowestValues = [int(fid[count].readline()) for count in range(0, number_of_chunks)]
+    while (current_line):
+        list = []
+        x = 0
+        while (current_line and (x < chunk_size)):
+            current_line = unsorted_file.readline()
+            if (current_line):
+                list.append(int(current_line))
+                x += 1
+        list.sort()
+        if list:
+            filename = "temp/chunk%d.txt" % current_temp_file
+            current_temp_file += 1
+            output_file = open(filename, 'w')
+            for x in list:
+                output_file.write(str(x) + '\n')
+            output_file.close()
 
-# for each iteration I need to find the smallest remaining value in lowestValues that is valid (watch out for empty lists)
-# Once I get the lowest, I write that to output_file
-#  I also need to increment lowestValues[n] where n is the file that I found the lowestValue in
+    unsorted_file.close()
 
-output_file = open('sorted.txt', 'w')
+def sortPhonebook(phonebook_size, number_of_chunks):
+# Create a list of number_of_chunk file pointers and a corresponding list of the first values in each file
+# Iterate over phonebook_size adding the min value to the output and swapping the appropriate entry in lowestValues
+# Takes roughly 80% of the processing time of this program
 
-for x in xrange(0, phonebook_size):
-    pass
-    lowest_location = lowestValues.index(min(lowestValues))
-    line = str(lowestValues[lowest_location]) + '\n'
-    output_file.write(line)
-    temp = fid[lowest_location].readline()
-    if (temp):
-        lowestValues[lowest_location] = int(temp)
-    else:
-        lowestValues[lowest_location] = 12345678987
+    fid = [open('temp/chunk%d.txt' % count, 'r') for count in range(0, number_of_chunks)]
+    lowestValues = [int(fid[count].readline()) for count in range(0, number_of_chunks)]
 
+    output_file = open('phonebook.txt', 'w')
 
-output_file.close()
+    for x in xrange(0, phonebook_size):
+        lowest_location = lowestValues.index(min(lowestValues))
+        output_file.write(str(lowestValues[lowest_location]) + '\n')
+        temp = fid[lowest_location].readline()
+        if (temp):
+            lowestValues[lowest_location] = int(temp)
+        else:
+            lowestValues[lowest_location] = 12345678987
+            fid[lowest_location].close()
 
+    output_file.close()
 
-
-#for x in xrange(0, (2000000*1)):
-#    line = str(random.randint(1000000000, 9999999999)) + '\n'
-#    output_file.write(line)
-
+chunkUnsorted((2000000*10), 200)
+sortPhonebook((2000000*10), 200)
 

@@ -1,11 +1,13 @@
 import sys
-import random
+from random import randint
 
-output_file = open('book.txt', 'w')
+def main():
+    output_file = open('unsorted.txt', 'w')
+    number_of_numbers = (2000000*10)
 
-for x in xrange(0, (2000000*1)):
-    line = str(random.randint(1000000000, 9999999999)) + '\n'
-    output_file.write(line)
+    for x in xrange(0, number_of_numbers):
+        output_file.write(str(randint(1000000000, 9999999999)) + '\n')
 
-output_file.close()
+    output_file.close()
 
+main()
